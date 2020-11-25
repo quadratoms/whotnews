@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title  %}
+WHOTnews
+{% endblock title  %}
+
+
+{% block content %}
+<!-- top storys div -->
+<div class='alert-danger p-4'>
+	<h1 class='text-danger'>Top Storys</h1>
+
+	{% for each in top %}
+	<h5><a href="/news/{{ each.id }}" style="color: forestgreen;">{{ each.heading }}</a></h5>
+	{% if each.article_img %}
+	<img src='{{ each.article_img }}' width="50%" alt="{{ each.heading }}">
+	{% else %}
+	<img src='{% static "logo.png" %}' width="50%" alt="whotnews icon">
+
+	{% endif %}
+	<p>
+		{{ each.content |truncatewords:25 | safe }}
+	</p>
+	{% endfor %}
+
+	<hr>
+
+	<hr>
+
+</div>
+<!-- list of recent update -->
+<div>
+	<h2>Recent Update News</h2>
+	{% for each in allnews %}
+
+	<div class='row'>
+		<div class='col-md-9'>
+			<h6><a href="/news/{{ each.id }}" style="color:firebrick;">{{ each.heading }}</a></h6>
+			<p>
+				{{ each.content |safe | truncatewords:25 }}
+			</p>
+		</div>
+		<div class='col-md-3'>
+			<a class="navbar-brand col" href="#">
+				<img src='{% static "logo.png" %}' width="60" alt="whotnews icon">
+			</a>
+		</div>
+		<hr>
+	</div>
+	{% endfor %}
+
+	<a href="/allpost" class='justify-content-center row'>
+		<button type="button" class="btn btn-success font-weight-bold">more</button>
+	</a>
+
+</div>
+{% endblock content %}

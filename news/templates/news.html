@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ newscontent.heading }}
+{% endblock title %}
+
+{% block content %}
+<!-- top storys div -->
+<div>
+	<h1>{{ newscontent.heading }}</h1>
+	{% if newscontent.article_img %}
+	<img src='{{ newscontent.article_img }}' width="50%" alt="{{ newscontent.heading }}">
+	{% else %}
+	<img src='{% static "logo.png" %}' width="50%" alt="whotnews icon">
+
+	{% endif %}
+	<p>{{ newscontent.content | safe }}}</p>
+
+	<form method='post' class="form-inline my-0 my-lg-0">
+		{% csrf_token %}
+
+		<textarea name="body" rows="4"></textarea>
+		<button class="btn btn-outline-success my-2 my-sm-0" name="comment" type="submit">Submit</button>
+	</form>
+	{% for each in newscomment %}
+	<div class="border border-danger">
+		<h6 class="border alert-danger">{{ each.us }}</h6>
+		<p>{{ each.body }}</p>
+		<span>{{ each.time }}</span>
+	</div>
+	{% endfor %}
+
+
+</div>
+  
+{% endblock content %}

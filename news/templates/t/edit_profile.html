@@ -1,0 +1,18 @@
+{% extends 't/base2.html' %}
+
+
+{% block content %}
+
+
+<form method="post">
+{% csrf_token %}
+<div class="form-group">
+{{ form.as_p }}
+</div>
+
+<button class="form-control btn btn-success" type="submit" name="btnprof">Submit</button>
+
+</form >
+
+{% endblock %}
+

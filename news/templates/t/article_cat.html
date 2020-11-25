@@ -1,0 +1,20 @@
+{% extends 't/base2.html' %}
+
+
+{% block content %}
+
+      <h3 class="pb-4 mb-4 font-italic border-bottom">
+        {{storys.cat}}
+      </h3>
+{% for each in story %}
+      <div class="blog-post rounded bg-light">
+        <h4 class="blog-post-title"><a href="/whot/article/{{each.id}}">{{each.heading}}</a></h4>
+        <p class="blog-post-meta">{{each.date}} by <a href="#">{{each.author }}</a></p>
+
+        <p>{{each.article_body|safe|truncatewords:18}}</p>
+        </div>
+{% endfor %}
+
+
+
+{% endblock %}

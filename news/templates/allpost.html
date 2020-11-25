@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+  WHOTnews allpost
+{% endblock title %}
+
+
+{% block content %}
+<!-- top storys div -->
+{% for each in allnews %}
+<h5>
+	<a href="/news/{{ each.id }}" style="color: forestgreen;">{{each.heading}}</a>
+</h5>
+
+<p>
+	{{ each.content |truncatewords:45 | safe }}
+</p>
+{% endfor %}
+
+<div class="nav">
+	<span class="">
+		{% if allnews.has_previous %}
+		<a class="btn btn-info" href="?page=1">&laquo; first</a>
+		<a class="btn btn-info" href="?page={{ allnews.previous_page_number }}">previous</a>
+		{% endif %}
+		<span class="current">
+			Page {{ allnews.number }} of {{ allnews.paginator.num_pages }}.
+		</span>
+		{% if allnews.has_next %}
+		<a class="btn btn-info" href="?page={{ allnews.next_page_number }}">next</a>
+		<a class="btn btn-info" href="?page={{ allnews.paginator.num_pages }}">last &raquo;</a>
+		{% endif %}
+	</span>
+</div>
+  
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ catlist.0.cat }}
+{% endblock title %}
+
+{% block content %}
+<!-- top storys div -->
+{% for each in catlist %}
+<h4>
+	<a href="/news/{{ each.id }}" style="color: forestgreen;">{{each.heading}}</a>
+</h4>
+<span>{{ each.date }}</span>
+<p>
+	{{ each.content |truncatewords:45 | safe }}
+</p>
+{% endfor %}
+<div class="nav">
+	<span class="">
+		{% if catlist.has_previous %}
+		<a class="btn btn-info" href="?page=1">&laquo; first</a>
+		<a class="btn btn-info" href="?page={{ catlist.previous_page_number }}">previous</a>
+		{% endif %}
+		<span class="current">
+			Page {{ catlist.number }} of {{ catlist.paginator.num_pages }}.
+		</span>
+		{% if catlist.has_next %}
+		<a class="btn btn-info" href="?page={{ catlist.next_page_number }}">next</a>
+		<a class="btn btn-info" href="?page={{ catlist.paginator.num_pages }}">last &raquo;</a>
+		{% endif %}
+	</span>
+</div>
+  
+{% endblock content %}

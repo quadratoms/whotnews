@@ -1,0 +1,25 @@
+{% extends 't/base2.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row bg-success">
+  <div class="col col-md-4">
+  
+  </div>
+  <div class="col col-md-8">
+    <h1>{{userprof.first_name}} Profile {% if user == userprof %}<a href="/edit"><button class="btn btn-success">Edit</button></a>{% endif %}</h1>
+    <p>Username: {{ userprof }}</p>
+    <p>Name: {{ profile.first_name }}</p>
+    <p>Email: {{ userprof.email }}</p>
+    <p>Phone: {{ profile.telephone }}</p>
+    <p>D.O.B: {{ profile.date }}</p>
+    {% if user.userprofile.image %}
+    <img src="{{ user.userprofile.image.url }}" width="240">
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,186 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href='{% static "hello.css" %}'>
+
+    <title>WHOTnews</title>
+  </head>
+  <body>
+  <header>
+    <div class='container-fluid'>
+    
+        <nav class="navbar navbar-light bg-light row">
+			<a class="navbar-brand col" href="/">
+				<img src='{% static "logo.png" %}' width="60" height="60" alt="whotnews icon">
+				<span class="text-danger" >WHOTnews</span>
+			</a>
+			<div>
+				  <img src='{% static "shine.png" %}' width="200" height="" alt="whotnews icon">
+				  <br>
+				  <form method='post' class="form-inline my-0 my-lg-0">
+					{% csrf_token %}
+				  <input class="form-control mr-sm-2" type="search" placeholder="Search" name='keywords' aria-label="Search">
+				  <button class="btn btn-outline-success my-2 my-sm-0" name='search' type="submit">Search</button>
+				</form>
+			</div> 
+		</nav>
+    
+    </div>
+    <div>
+      
+      <nav class="navbar navbar-expand-md navbar-light bg-danger">
+					  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+					    <span class="navbar-toggler-icon"></span>
+					  </button>
+					  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+					    
+						<a class="navbar-brand" href="/">Home</a>
+					    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					      <li class="nav-item active">
+					        <a class="nav-link" href="/allpost/">News</a>
+					      </li>
+						  {% for each in catlink %}
+					      <li class="nav-item">
+					        <a class="nav-link" href="/cat/{{ each.id }}">{{ each.cat }}</a>
+					      </li>
+						  {% endfor %}
+					      
+					    </ul>
+    					
+					  </div>
+	  	</nav>
+	  </div>
+  </header>
+  
+<div class= 'container-fluid' >
+	<div class='row justify-content-center'>
+		<main class='col-md-9' >
+			<div class='mb-5 pb-5' >
+			<!-- top storys div -->
+				<div>
+					<h1 >{{ newscontent.heading }}</h1>
+					<p>{{ newscontent.content | safe }}}</p>
+
+						<form method='post' class="form-inline my-0 my-lg-0">
+							{% csrf_token %}
+
+							<textarea name ="body" rows ="4"></textarea >
+							<button class="btn btn-outline-success my-2 my-sm-0" name="comment" type="submit">Submit</button>
+							</form>
+					{% for each in newscomment %}
+					<div class="border border-danger">
+						<h6 class="border alert-danger">{{ each.us }}</h6>
+						<p>{{ each.body }}</p>
+						<span>{{ each.time }}</span>
+					</div>
+					{% endfor %}
+					
+
+				</div>
+			
+			</div>
+			<div class='container-fluid' >
+				<div class='row alert-danger' >
+					<h3 > Category</h3>
+					<button type="button" class="btn btn-success mx-5 ">more</button>
+				</div>
+				<div class='row' >
+				<div class='col-md-3' >
+				<h5 > Politics</h5>
+				<h6>headline of news</h6>
+				<div class=" justify-content-center row">
+					<img src="whot.png" width="30%" class='rounded' alt="whotnews icon">
+				</div>
+					<p>
+						we are xurrently workin on this website it will be on soon.	
+					</p>
+					<hr>
+					<h6>headline of news</h6>
+					<p>
+						we are xurrently workin on this website it will be on soon.	
+					</p>
+					<hr>
+				</div>
+				<div class='col-md-3' >
+				<h5>Sport</h5>
+					<h6>headline of news</h6>
+					<p>
+						we are xurrently workin on this website it will be on soon.	
+					</p>
+					<hr>
+					<h6>headline of news</h6>
+					<p>
+						we are xurrently workin on this website it will be on soon.	
+					</p>
+					<hr>
+				</div>
+				<div class='col-md-3' >
+				<h5 >Entertement</h5>
+					<h6>headline of news</h6>
+					<p>
+						we are xurrently workin on this website it will be on soon.	
+					</p>
+					<hr>
+					<h6>headline of news</h6>
+					<p>
+						we are xurrently workin on this website it will be on soon.	
+					</p>
+					<hr>
+				</div>
+				<div class='col-md-3' >
+				<h5>World</h5>
+					<h6>headline of news</h6>
+					<p>
+						we are xurrently workin on this website it will be on soon.	
+					</p>
+					<hr>
+					<h6>headline of news</h6>
+					<p>
+						we are xurrently workin on this website it will be on soon.	
+					</p>
+					<hr>
+				</div>
+				
+				</div>
+			</div>
+			
+		</main>
+	  <!-- aside start here  -->
+		<aside class='col-md-3 border border-danger'>
+			<div>
+			whot blog items like
+			do you know ---- 
+			whot do you know
+			</div>
+		</aside>
+	</div>
+</div><!- page container ends -->
+  <!-- Bootstrap CSS -->
+  <footer class='bg-danger' >
+  
+  	<form class="col-4 my-2 my-lg-0">
+			<textarea id ="w3review" name ="w3review" rows ="4"></textarea >
+  		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
+		</form
+  	
+  
+  </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src='{% static "jquery.js" %}' ></script>
+    <script src='{% static "proper.js" %}' ></script>
+    <script src='{% static "hello.js" %}' ></script>
+  </body>
+</html>
+
+
+
+
+
