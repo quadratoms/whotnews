@@ -27,7 +27,7 @@
 					<br>
 					<form method='post' class="form-inline my-0 my-lg-0">
 						{% csrf_token %}
-						<input class="form-control mr-sm-2" type="search" placeholder="Search" name='keywords'
+						<input class="form-control mr-sm-2" required type="search" placeholder="Search" name='keywords'
 							aria-label="Search">
 						<button class="btn btn-outline-success my-2 my-sm-0" name='search' type="submit">Search</button>
 					</form>
@@ -35,7 +35,7 @@
 			</nav>
 
 		</div>
-		<div>
+		<div class="pt-1 py-1 bg-success">
 
 			<nav class="navbar navbar-expand-md navbar-dark bg-danger">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
@@ -49,8 +49,8 @@
 						<li class="nav-item active">
 							<a class="nav-link" href="/allpost/">News</a>
 						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href="/whot/">Blog</a>
+						<li class="nav-item btn-success active">
+							<a class="nav-link"  href="/whot/">Blog</a>
 						</li>
 						{% for each in catlink %}
 						<li class="nav-item active">

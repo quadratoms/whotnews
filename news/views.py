@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .forms import CommentForm, linkform, NewsmodelForm
 from .viewengine import searchengine, topstory, catmake, addhtml, catlistlist, converttonews
-from .models import Newsmodel, Comment, cartegory, Source
+from .models import Newsmodel, Comment, cartegory
 from django.contrib import messages
 
 
@@ -51,9 +51,9 @@ def news(request, id):
         return redirect(a)
     
     newscontent= Newsmodel.objects.get(id=id)
-    newscontent.content = addhtml(newscontent.content)
     newscontent.view +=1
     newscontent.save()
+    newscontent.content = addhtml(newscontent.content)
     newscomment= newscontent.comment_set.all().order_by('-time')
     
     catlink=cartegory.objects.all()
@@ -125,25 +125,38 @@ def allpost(request):
 
 
 def newsposter(request):
-    form= linkform()
-    g=None
-    
+    form= linkform(request.POST)
+
 
     if 'convert' in request.POST:
-        link=request.POST.get('link')
-        try:
-            a=converttonews(link)
-            c=Newsmodel(a)
-            c.save()
-            print(333)
-            messages.success(request, 'created, it will be posted soon')
-        except:
-            print(567)
-            messages.error(request, 'link can\'t be convert or check the link')
+        form= linkform(request.POST)
+        if form.is_valid():
+
+            link=request.POST.get('link')
+            cat= form.cleaned_data.get('cat')
+            
+        
+            try:
+                a=converttonews(link)
+                c=Newsmodel()
+                c.source= a['source']
+                c.source_url= a['source_url']
+                c.heading= a['heading']
+                c.article_img= a['article_img']
+                c.content= a['content']
+                c.save()
+                
+                c.newscat.add(*cat)
+                c.save()
+                
+                messages.success(request, 'created, it will be posted soon')
+            except:
+                print(567)
+                messages.error(request, 'link can\'t be convert or check the link')
         return redirect('/newsposter/')
         
 
-    return render(request, 'newsposter.html', {'form':form, 'g':g})
+    return render(request, 'newsposter.html', {'form':form})
 
 
 

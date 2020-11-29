@@ -2,7 +2,6 @@ from newspaper import Article
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-from bs4 import BeautifulSoup
 
 from news.models import Newsmodel
 import pickle
@@ -14,6 +13,13 @@ def main():
 	a=pickle.load(f)
 	all=[]
 	sitelist= [
+		"https://dailytimes.ng/category/news/",
+		"https://tribuneonlineng.com/category/latest-news/",
+		"https://twmagazine.net/category/beauty/",
+		"https://twmagazine.net/category/fashion/",
+		"https://twmagazine.net/category/living/",
+		"https://twmagazine.net/category/love/",
+		"https://guardian.ng/latest/",
 		"https://www.vanguardngr.com/news",
 		"https://edition.cnn.com/africa",
 		"https://edition.cnn.com/world",
@@ -36,14 +42,27 @@ def main():
 				if b not in a:
 					if b not in all:
 						all.append(b)
-						'''if 'https://www.vanguardngr.com/category/' in b:
-							all.pop()
-						elif 'https://www.vanguardngr.com/author/' in b:
-							all.pop()'''
+
+						if all.count(b)== 2:
+							all.remove(b)
+							
 			
 			print(len(all))
 			for each in all:
-				
+				l=['vanguard', 'nation', 'cnn', 'theguardian', '127', 'dailytimes', 'dailytrust',
+				'tribune']
+				'''
+				the purpose of this is to fetch the image corespond with the model
+				e.g {source}.jpg in template
+				'''
+				source=None
+				for s in l:
+					if s in each:
+						source= s
+						break
+					else:
+						pass
+
 				try:
 					url = each
 					article = Article(url)
@@ -57,6 +76,7 @@ def main():
 					n.heading=article.title
 					n.content=article.text
 					n.source_url=each
+					n.source=source+'.png'
 					n.save()
 				
 				except:
@@ -70,6 +90,11 @@ def main():
 			
 			with open('forbidenlist.pkl', 'wb') as f:
 				pickle.dump(a, f)
-			
-main()	
-		
+		badtit=['News', 'Latest Nigeria News, Nigerian Newspapers, Politics', '',
+		'Vanguard News', 'Vanguard News, Sports and Business from vanguard Newspapers -',
+		'Page'
+		]
+		for i in badtit:
+			Newsmodel.objects.filter(heading=i).delete()
+
+main()

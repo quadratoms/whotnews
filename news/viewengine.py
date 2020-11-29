@@ -1,4 +1,4 @@
-from .models import Newsmodel, Comment, cartegory, Source
+from .models import Newsmodel, Comment, cartegory
 from django.shortcuts import render, redirect, get_object_or_404
 from datetime import date, timedelta
 from newspaper import Article
@@ -93,12 +93,21 @@ def converttonews(link):
     article = Article(link)
     article.download()
     article.parse()
+    l=['vanguard', 'nation', 'cnn', 'theguardian', '127', 'dailytimes', 'dailytrust', 'tribune']
+    source=None#  this may bring error, idont know
+    for s in l:
+        if s in link:
+            source= s
+            break
+        else:
+            pass
 
     return {
+            'source': source+'.png',
             'source_url':link,
             'heading': article.title,
             'article_img': article.top_img,
-            'content': article.article_html
+            'content': article.text
         }
     
     

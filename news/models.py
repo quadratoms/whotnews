@@ -14,17 +14,11 @@ class cartegory(models.Model):
 
 
 
-class Source(models.Model):
-    site = models.TextField(null=True)
-    icon = models.ImageField(upload_to= 'article_image')
-    
-    def __str__(self):
-        return self.site
 
 
 class Newsmodel(models.Model):
-    newscat=models.ForeignKey(cartegory,on_delete=models.PROTECT,null= True, blank= True)
-    source=models.ForeignKey(Source,null= True, blank= True, on_delete=models.SET_NULL)# shoulldbechanged
+    newscat=models.ManyToManyField(cartegory,)
+    source=models.CharField(blank=True, null=True, max_length=20)
     source_url= models.CharField(blank=True, null=True, max_length=1000)
     heading = models.CharField(max_length=300)
     date=models.DateTimeField(auto_now_add=True)

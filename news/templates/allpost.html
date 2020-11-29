@@ -2,36 +2,40 @@
 
 
 {% block title %}
-  WHOTnews allpost
+WHOTnews allpost
 {% endblock title %}
 
 
 {% block content %}
 <!-- top storys div -->
-{% for each in allnews %}
-<h5>
-	<a href="/news/{{ each.id }}" style="color: forestgreen;">{{each.heading}}</a>
-</h5>
+<div class="pt-5">
+	{% for each in allnews %}
+	<div>
+		<h5>
+			<a href="/news/{{ each.id }}" style="color: forestgreen;">{{each.heading}}</a>
+		</h5>
 
-<p>
-	{{ each.content |truncatewords:45 | safe }}
-</p>
-{% endfor %}
+		<p style="font-weight: 500;">
+			{{ each.content |truncatewords:45 | safe }}
+		</p>
+	</div>
+	{% endfor %}
 
-<div class="nav">
-	<span class="">
-		{% if allnews.has_previous %}
-		<a class="btn btn-info" href="?page=1">&laquo; first</a>
-		<a class="btn btn-info" href="?page={{ allnews.previous_page_number }}">previous</a>
-		{% endif %}
-		<span class="current">
-			Page {{ allnews.number }} of {{ allnews.paginator.num_pages }}.
+	<div class="nav">
+		<span class="">
+			{% if allnews.has_previous %}
+			<a class="btn btn-info" href="?page=1">&laquo; first</a>
+			<a class="btn btn-info" href="?page={{ allnews.previous_page_number }}">previous</a>
+			{% endif %}
+			<span class="current">
+				Page {{ allnews.number }} of {{ allnews.paginator.num_pages }}.
+			</span>
+			{% if allnews.has_next %}
+			<a class="btn btn-info" href="?page={{ allnews.next_page_number }}">next</a>
+			<a class="btn btn-info" href="?page={{ allnews.paginator.num_pages }}">last &raquo;</a>
+			{% endif %}
 		</span>
-		{% if allnews.has_next %}
-		<a class="btn btn-info" href="?page={{ allnews.next_page_number }}">next</a>
-		<a class="btn btn-info" href="?page={{ allnews.paginator.num_pages }}">last &raquo;</a>
-		{% endif %}
-	</span>
+	</div>
 </div>
-  
+
 {% endblock content %}
