@@ -3,7 +3,7 @@ from newspaper import Article
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
-from news.models import Newsmodel
+from news.models import Newsmodel, cartegory
 import pickle
 
 
@@ -24,7 +24,7 @@ def main():
 		"https://edition.cnn.com/africa",
 		"https://edition.cnn.com/world",
 		"https://edition.cnn.com/entertainment",
-		"https://edition.cnn.com/style",
+		"https://edition.cnn.com",
 		"https://thenationonlineng.net/category/news/"
 	]
 	
@@ -35,7 +35,7 @@ def main():
     	
 		for site in sitelist:	
 			html = urlopen( site ) # Insert your URL to extrac
-			page = BeautifulSoup(html.read())
+			page = BeautifulSoup(html.read(), 'lxml')
 			for link in page.find_all('a'):
 				b=link.get('href')
 				
@@ -71,6 +71,7 @@ def main():
 					
 					print(article.title)
 					n = Newsmodel()
+					n.newscat= cartegory.objects.get(cat=News)
 					n.author=article.authors
 					n.article_img=article.top_img
 					n.heading=article.title

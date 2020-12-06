@@ -35,6 +35,7 @@ def catmake(cat, num=None):
     b=[]
     a = cartegory.objects.get(cat=cat)
     n=Newsmodel.objects.filter(newscat=a).order_by('-date')
+    
     if num==None:
         return n
     else:
@@ -84,7 +85,19 @@ def catlistlist(l, num=3):
 
 					n.save()
 '''
-
+def idk():
+    first=catmake('Polictics')
+    first.name=cartegory.objects.get(cat='Polictics')
+    second=catmake('Education')
+    second.name=cartegory.objects.get(cat='Education')
+    third=catmake('Sport')
+    third.name=cartegory.objects.get(cat='Sport')
+    fourth=catmake('World')
+    fourth.name=cartegory.objects.get(cat='World')
+    c= [first, second, third, fourth]
+    
+    return c
+    
 
 
 def converttonews(link):
@@ -93,6 +106,7 @@ def converttonews(link):
     article = Article(link)
     article.download()
     article.parse()
+    article
     l=['vanguard', 'nation', 'cnn', 'theguardian', '127', 'dailytimes', 'dailytrust', 'tribune']
     source=None#  this may bring error, idont know
     for s in l:
@@ -114,9 +128,14 @@ def converttonews(link):
 
 def addhtml(text):
 
+    '''for each in text.readlines:
+        if 'COMMENTARY:' in each:
+            text= text.readlines.remove(each)
+    '''
     a= '<p>'+text+'</p>'
-    a= a.replace('Kindly Share This Story', '')
+    a= a.replace('Kindly Share This Story:', '')
     a= a.replace('\n', '</p>\n<p>')
+    a= a.replace('}', '')
 
     return a
 

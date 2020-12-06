@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ catname }}
+{{ catlist.name }} - WHOTnews
 {% endblock title %}
 
 {% block content %}
 <!-- top storys div -->
 <div>
-	<h1> {{ catname }} jhjhjh</h1>
+	<h1> {{ catlist.name }} </h1>
 </div>
 {% for each in catlist %}
 <div>

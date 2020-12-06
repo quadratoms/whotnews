@@ -1,41 +1,30 @@
-{% extends "base.html" %}
-
-{% block title %}
-  Search WHOTnews
-{% endblock title %}
-
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Search WHOTnews {% endblock title %} {% block content %}
 <div>
-	<!-- top storys div -->
-	<div>
-		<h1 style="color: rgb(121, 12, 12);">Search result...</h1>
-	</div>
-	{% for i in newslist %}
-	<br>
-	<h6>
-		<a href="/news/{{ i.id }}" style="color: forestgreen;">{{i.heading}}</a>
-	</h6>
-	<hr style="color:red">
-
-	{% endfor %}
-	<div class="nav">
-		<span class="">
+    <!-- top storys div -->
+    <div>
+        <h1 style="color: rgb(121, 12, 12);">Search result...</h1>
+    </div>
+    {% for i in newslist %}
+    <br>
+    <h6 class>
+        <a href="/news/{{ i.id }}" style="color: forestgreen;">{{i.heading}}</a>
+    </h6>
+    <hr style="color:red"> {% endfor %}
+    <div class="nav">
+        <span class="">
 			{% if newslist.has_previous %}
 			<a class="btn btn-info" href="?page=1">&laquo; first</a>
 			<a class="btn btn-info" href="?page={{ newslist.previous_page_number }}">previous</a>
 			{% endif %}
 			<span class="current">
 				Page {{ newslist.number }} of {{ newslist.paginator.num_pages }}.
-			</span>
-			{% if newslist.has_next %}
-			<a class="btn btn-info" href="?page={{ newslist.next_page_number }}">next</a>
-			<a class="btn btn-info" href="?page={{ newslist.paginator.num_pages }}">last &raquo;</a>
-			{% endif %}
-		</span>
-	</div>
+			</span> {% if newslist.has_next %}
+        <a class="btn btn-info" href="?page={{ newslist.next_page_number }}">next</a>
+        <a class="btn btn-info" href="?page={{ newslist.paginator.num_pages }}">last &raquo;</a> {% endif %}
+        </span>
+    </div>
 
 
 </div>
-  
+
 {% endblock content %}

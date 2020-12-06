@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .forms import CommentForm, linkform, NewsmodelForm
-from .viewengine import searchengine, topstory, catmake, addhtml, catlistlist, converttonews
+from .viewengine import searchengine, topstory, catmake, addhtml, catlistlist, converttonews, idk
 from .models import Newsmodel, Comment, cartegory
 from django.contrib import messages
 
@@ -9,14 +9,11 @@ from django.contrib import messages
 
 def home(request):
     top=topstory()
-    c=catlistlist(['Polictics', 'Education', 'Sport','World'], num=2)
-    first=catmake('Polictics')
-    second=catmake('Education')
-    third=catmake('Sport')
-    fourth=catmake('World')
-    print(fourth)
-    print(c, ' lls')
-    print(len(c))
+    #l= ['Polictics', 'Education', 'Sport','World']
+    #c=catlistlist(l, num=2)
+    
+    c=idk()
+    
     if 'search' in request.POST:
         print(22)
         keywords = request.POST.get('keywords')
@@ -30,10 +27,10 @@ def home(request):
     context={
         'allnews':allnews,
         'top':top ,
-        'first':first,
-        'second':second,
-        'third':third,
-        'fourth':fourth,
+        #'first':first,
+        #'second':second,
+        #'third':third,
+        #'fourth':fourth,
         'c':c,
         'catlink':catlink
 
@@ -44,12 +41,14 @@ def home(request):
 
 
 def news(request, id):
+    
     if 'search' in request.POST:
         print(22)
         keywords = request.POST.get('keywords')
         a='/search='+ keywords + '/'
         return redirect(a)
     
+    c=idk()
     newscontent= Newsmodel.objects.get(id=id)
     newscontent.view +=1
     newscontent.save()
@@ -67,7 +66,7 @@ def news(request, id):
             
             comment.save()
 
-    return render(request, 'news.html', {'catlink':catlink, 'newscontent':newscontent, 'newscomment':newscomment})
+    return render(request, 'news.html', {'c':c,'catlink':catlink, 'newscontent':newscontent, 'newscomment':newscomment})
 
 
 def newscat(request, id):
@@ -76,17 +75,20 @@ def newscat(request, id):
         keywords = request.POST.get('keywords')
         a='/search='+ keywords + '/'
         return redirect(a)
+    c=idk()
     newscat= cartegory.objects.get(id=id)
     cats= Newsmodel.objects.filter(newscat=newscat.id)
-    p=Paginator(cats, 1)
+    p=Paginator(cats, 20)
     pnum= request.GET.get('page', 1)
     catlist = p.get_page(pnum)
+    catlist.name=newscat#instance value for catlist
     print(newscat)
     print(catlist)
     catlink=cartegory.objects.all()
+    
 
 
-    return render(request, 'newscat.html', {'catlink':catlink, 'catlist':catlist})
+    return render(request, 'newscat.html', {'c':c,'catlink':catlink, 'catlist':catlist})
 
 def search(request, pk):
     if 'search' in request.POST:
@@ -95,9 +97,12 @@ def search(request, pk):
         a='/search='+ keywords + '/'
         return redirect(a)
     news=searchengine(pk)
-    p=Paginator(news, 3)
+    p=Paginator(news, 15)
     pnum= request.GET.get('page', 1)
-    newslist = p.get_page(pnum)
+    try:
+        newslist = p.get_page(pnum)
+    except:# in case there is no result for search
+        newslist = None
     catlink=cartegory.objects.all()
 
 	
@@ -134,6 +139,7 @@ def newsposter(request):
 
             link=request.POST.get('link')
             cat= form.cleaned_data.get('cat')
+            
             
         
             try:

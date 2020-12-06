@@ -16,17 +16,20 @@ WHOTnews
 	<div style="border: 0.7rem solid white ;">
 		<div class="row ">
 			<div class="col-sm-9">
-				<h3 style="font-size: 25px;"><a href="/news/{{ each.id }}" style="color: forestgreen;">{{ each.heading }}</a></h3>
+				<h3 style="font-size: 25px;"><a href="/news/{{ each.id }}"
+						style="color: forestgreen;">{{ each.heading }}</a></h3>
 			</div>
 			<div class="col-sm-3 d-flex justify-content-end">
 				{% if each.source %}
-				<img src='/static/{{ each.source }}' height="60" alt="{{ each.source }}">
+				<a href="{{ each.source_url }}">
+					<img src='/static/{{ each.source }}' height="60" alt="{{ each.source }}">
+				</a>
 				{% else %}
 				<img src='{% static "logo.png" %}' height="60" alt="whotnews icon">
 				{% endif %}
 			</div>
 		</div>
-		<div >
+		<div>
 			{% if each.article_img %}
 			<img src='{{ each.article_img }}' width="50%" alt="{{ each.heading }}">
 			{% else %}
@@ -54,7 +57,8 @@ WHOTnews
 
 	<div class='row'>
 		<div class='col-md-9'>
-			<h3 style="font-size: 25px;"><a href="/news/{{ each.id }}" style="color:firebrick;">{{ each.heading }}</a></h3>
+			<h3 style="font-size: 25px;"><a href="/news/{{ each.id }}" style="color:firebrick;">{{ each.heading }}</a>
+			</h3>
 			<p style="font-weight: 400;">
 				{{ each.content |safe | truncatewords:25 }}
 			</p>
@@ -67,7 +71,7 @@ WHOTnews
 			{% else %}
 			<img src='{% static "logo.png" %}' height="60" alt="whotnews icon">
 			{% endif %}
-			
+
 		</div>
 		<hr>
 	</div>

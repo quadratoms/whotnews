@@ -9,8 +9,13 @@
 <!-- top storys div -->
 <div>
 	<div class="px-3">
-		<div>
-			<h1 style="font-size: 28px; font-weight:600; color:darkred">{{ newscontent.heading }}</h1>
+		<div class="row">
+			<div class="col-10">
+				<h1 style="font-size: 28px; font-weight:600; color:darkred">{{ newscontent.heading }}</h1>
+			</div>
+			<div class="col-2">
+				<audio onclick="" src="#"  >play</audio>
+			</div>
 		</div>
 		<div>
 			{% if newscontent.article_img %}
@@ -20,7 +25,16 @@
 			{% endif %}
 		</div>
 		<div class="py-4" style="font-size: 20px; font-weight:450; color:black">
-			<p >{{ newscontent.content | safe }}}</p>
+			<p >{{ newscontent.content | safe }}</p>
+		</div>
+		<div class=" d-flex justify-content-end">
+			{% if newscontent.source %}
+			<a href="{{ each.source_url }}">
+				<img src='/static/{{ newscontent.source }}' height="60" alt="{{ newscontent.source }}">
+			</a>
+			{% else %}
+			<img src='{% static "logo.png" %}' height="60" alt="whotnews icon">
+			{% endif %}
 		</div>
 	</div>
 	<form method='post' class="form-inline my-0 my-lg-0">

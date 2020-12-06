@@ -5,7 +5,7 @@ from ckeditor.fields import RichTextField
 
 
 class cartegory(models.Model):
-	catlist='Polictics World Religion Education Fashion Technology Entertainment Medical Sport'
+	catlist='News Polictics World Religion Education Fashion Technology Entertainment Medical Sport'
 	CAT=models.TextChoices('CAT', catlist)
 	cat=models.CharField(choices=CAT.choices, max_length=15)
 	
@@ -17,7 +17,7 @@ class cartegory(models.Model):
 
 
 class Newsmodel(models.Model):
-    newscat=models.ManyToManyField(cartegory,)
+    newscat=models.ManyToManyField(cartegory)
     source=models.CharField(blank=True, null=True, max_length=20)
     source_url= models.CharField(blank=True, null=True, max_length=1000)
     heading = models.CharField(max_length=300)

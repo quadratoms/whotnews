@@ -20,7 +20,7 @@
 			<nav class="navbar navbar-light bg-light row">
 				<a class="navbar-brand col" href="/">
 					<img src='{% static "logo.png" %}' width="60" height="60" alt="whotnews icon">
-					<span class="text-danger">WHOTnews</span>
+					<span class="text-danger" style="font-weight: 800;">WHOTnews</span>
 				</a>
 				<div>
 					<img src='{% static "shine.png" %}' width="200" height="" alt="whotnews icon">
@@ -86,7 +86,7 @@
 						{% for cat in c %}
 						{% if cat != None %}
 						<div class='col-md-3'>
-							<h5>{{ cat.0.newscat }}</h5>
+							<h5>{{ cat.name }}</h5>
 							{% for each in cat %}
 							{% if each != None %}
 							<h6>{{ each.heading }}</h6>
@@ -236,7 +236,7 @@
 			</aside>
 		</div>
 	</div>
-	<!- page container ends -->
+	<!-- page container ends -->
 		<!-- Bootstrap CSS -->
 		<footer class='bg-danger'>
 
