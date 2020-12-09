@@ -52,6 +52,12 @@ def news(request, id):
     newscontent= Newsmodel.objects.get(id=id)
     newscontent.view +=1
     newscontent.save()
+    a= newscontent.content
+    a=a.replace('\n', ' ')
+    a=a.replace('  ', ' ')
+    a=a.replace('   ', ' ')
+    a=a.replace('    ', ' ')
+    
     newscontent.content = addhtml(newscontent.content)
     newscomment= newscontent.comment_set.all().order_by('-time')
     
@@ -66,7 +72,7 @@ def news(request, id):
             
             comment.save()
 
-    return render(request, 'news.html', {'c':c,'catlink':catlink, 'newscontent':newscontent, 'newscomment':newscomment})
+    return render(request, 'news.html', {'a':a, 'c':c,'catlink':catlink, 'newscontent':newscontent, 'newscomment':newscomment})
 
 
 def newscat(request, id):

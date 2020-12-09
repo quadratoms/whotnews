@@ -14,44 +14,150 @@
 				<h1 style="font-size: 28px; font-weight:600; color:darkred">{{ newscontent.heading }}</h1>
 			</div>
 			<div class="col-2">
-				<audio onclick="" src="#"  >play</audio>
+				<button type="button" onclick="newsplay()" class="btn btn-success btn-lg" data-toggle="modal"
+					data-target="#myModal">
+					Play
+				</button>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+					style="display: none;">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header justify-content-between">
+								<h4 class="modal-title" id="myModalLabel">NEW READER</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body bg-success">
+								<div>
+									<audio src="" controls>play</audio>
+								</div>
+								<div class="modal-footer justify-content-center">
+									<button type="button" class="btn btn-light " data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- -->
+				</div>
+			</div>
+			<div>
+				{% if newscontent.article_img %}
+				<img src='{{ newscontent.article_img }}' width="50%" alt="{{ newscontent.heading }}">
+				{% else %}
+				<img src='{% static "logo.png" %}' width="50%" alt="whotnews icon">
+				{% endif %}
+			</div>
+			<div class="py-4" style="font-size: 20px; font-weight:450; color:black">
+				<p>{{ newscontent.content | safe }}</p>
+			</div>
+			<div class=" d-flex justify-content-end">
+				{% if newscontent.source %}
+				<a href="{{ each.source_url }}">
+					<img src='/static/{{ newscontent.source }}' height="60" alt="{{ newscontent.source }}">
+				</a>
+				{% else %}
+				<img src='{% static "logo.png" %}' height="60" alt="whotnews icon">
+				{% endif %}
 			</div>
 		</div>
-		<div>
-			{% if newscontent.article_img %}
-			<img src='{{ newscontent.article_img }}' width="50%" alt="{{ newscontent.heading }}">
-			{% else %}
-			<img src='{% static "logo.png" %}' width="50%" alt="whotnews icon">
-			{% endif %}
+		<form method='post' class="form-inline my-0 my-lg-0">
+			{% csrf_token %}
+
+			<textarea name="body" rows="4" cols="30" spellcheck="true"></textarea>
+			<button class="btn btn-outline-success my-2 my-sm-0" name="comment" type="submit">Submit</button>
+		</form>
+		{% for each in newscomment %}
+		<div class="border border-danger">
+			<h6 class="border alert-danger">{{ each.us }}</h6>
+			<p class="">{{ each.body }}</p>
+			<span>{{ each.time }}</span>
 		</div>
-		<div class="py-4" style="font-size: 20px; font-weight:450; color:black">
-			<p >{{ newscontent.content | safe }}</p>
-		</div>
-		<div class=" d-flex justify-content-end">
-			{% if newscontent.source %}
-			<a href="{{ each.source_url }}">
-				<img src='/static/{{ newscontent.source }}' height="60" alt="{{ newscontent.source }}">
-			</a>
-			{% else %}
-			<img src='{% static "logo.png" %}' height="60" alt="whotnews icon">
-			{% endif %}
-		</div>
+		{% endfor %}
+
+
 	</div>
-	<form method='post' class="form-inline my-0 my-lg-0">
-		{% csrf_token %}
+	<script>
+		function newsplhgay() {
+			//var url = 'https://stackoverflow.com/questions/10664244/django-how-to-manage-development-and-production-settings#10664412'
+			var url = 'http://localhost:8000/gtts/en-ng/{{ a }}/'
+			var a = fetch(url, {
+				method: "GET",
+				mode: "no-cors"
+			})
+			let b = document.querySelector('audio');
+			b.setAttribute('src', 'http://localhost:8000' + a.mp3)
 
-		<textarea name="body" rows="4" cols="30" spellcheck="true" ></textarea>
-		<button class="btn btn-outline-success my-2 my-sm-0" name="comment" type="submit">Submit</button>
-	</form>
-	{% for each in newscomment %}
-	<div class="border border-danger">
-		<h6 class="border alert-danger">{{ each.us }}</h6>
-		<p class="">{{ each.body }}</p>
-		<span>{{ each.time }}</span>
-	</div>
-	{% endfor %}
+		}
 
 
-</div>
+		function newsplay() {
+			//var url = 'https://stackoverflow.com/questions/38004048/get-and-fetch-getting-html-body'
 
-{% endblock content %}
+			var url = 'http://localhost:8000/gtts/en-us/{{ a }}'
+			fetch(url, {
+					method: 'GET', // *GET, POST, PUT, DELETE, etc.
+					mode: 'no-cors', // no-cors, *cors, same-origin
+					cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+					credentials: 'same-origin', // include, *same-origin, omit
+					headers: {
+						//'Content-Type': 'application/json',
+						'Content-Type': 'text/json',
+						'Access-Control-Allow-Origin': '*'
+						// 'Content-Type': 'application/x-www-form-urlencoded',
+					}
+				})
+				.then(response => {
+					return response.json();
+				}).then(data => {
+					console.log('data:', data);
+					let b = document.querySelector('audio');
+					b.setAttribute('src', 'http://localhost:8000' + data.mp3)
+				});
+		}
+		//newsplay()
+
+
+		var firefoxTestDone = false
+
+		function reportFirefoxTestResult(result) {
+			if (!firefoxTestDone) {
+				$('#ff-bug-test-result')
+					.addClass(result ? 'text-success' : 'text-danger')
+					.text(result ? 'PASS' : 'FAIL')
+			}
+		}
+
+		$(function () {
+			$('[data-toggle="popover"]').popover()
+			$('[data-toggle="tooltip"]').tooltip()
+
+			$('#tall-toggle').click(function () {
+				$('#tall').toggle()
+			})
+
+			$('#ff-bug-input').one('focus', function () {
+				$('#firefoxModal').on('focus', reportFirefoxTestResult.bind(false))
+				$('#ff-bug-input').on('focus', reportFirefoxTestResult.bind(true))
+			})
+
+			$('#btnPreventModal').on('click', function () {
+				$('#firefoxModal').one('shown.bs.modal', function () {
+						$(this).modal('hide')
+					})
+					.one('hide.bs.modal', function (event) {
+						event.preventDefault()
+						if ($(this).data('bs.modal')._isTransitioning) {
+							console.error(
+								'Modal plugin should not set _isTransitioning when hide event is prevented'
+							)
+						} else {
+							console.log('Test passed')
+							$(this).modal('hide') // work as expected
+						}
+					})
+					.modal('show')
+			})
+		})
+	</script>
+	{% endblock content %}
