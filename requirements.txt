@@ -1,0 +1,5 @@
+django
+djangorestframework
+django-gtts
+django-ckedtor
+newspaper3k

@@ -21,6 +21,7 @@ urlpatterns = [
     path('', include('news.urls')),
     path('whot/', include('newblog.urls')),
     path('gtts/', include('gtts.urls')),
+    path('api/', include('newapi.urls')),
 
 
 ]
