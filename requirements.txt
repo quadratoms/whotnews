@@ -1,5 +1,5 @@
 django
 djangorestframework
 django-gtts
-django-ckedtor
+django-ckeditor==3.6.2.1
 newspaper3k
