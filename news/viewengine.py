@@ -56,7 +56,7 @@ def catmake(cat, num=None):
 
 def catlistlist(l, num=3):
     '''
-    collect a list of cartergory name and return num amount of each cartegory
+    collect a list of cartergory name and return num amount of each category
     e.i a list of the catergory with list of each cat model
     '''
     a=[]
@@ -68,10 +68,10 @@ def catlistlist(l, num=3):
                 a.append(catmake(i, num))
                 print(a)
             except:
-                print('write the right cartegory name')
+                print('write the right category name')
         return a
     else:
-        print('l is a list of cartegory name')
+        print('l is a list of category name')
         pass
 
 
@@ -107,7 +107,7 @@ def converttonews(link):
     article.download()
     article.parse()
     article
-    l=['vanguard', 'nation', 'cnn', 'theguardian', '127', 'dailytimes', 'dailytrust', 'tribune']
+    l=['vanguard', 'nation', 'cnn', 'theguardian', '127', 'dailytimes', 'dailytrust', 'tribune','punchng']
     source=None#  this may bring error, idont know
     for s in l:
         if s in link:

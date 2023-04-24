@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('news.urls')),
     path('whot/', include('newblog.urls')),
-    path('gtts/', include('gtts.urls')),
+    # path('gtts/', include('gTTS.urls')),
     path('api/', include('newapi.urls')),
 
 

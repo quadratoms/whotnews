@@ -88,7 +88,7 @@ def top(request):
 '''
 newsposter will be add later 
 it will take two pk, first will be str which is url 
-and the other will be slug which will cartegory
+and the other will be slug which will category
 
 '''
 # Create your views here.

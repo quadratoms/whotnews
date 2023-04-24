@@ -9,8 +9,28 @@
 <div>
 	<h1> {{ catlist.name }} </h1>
 </div>
-{% for each in catlist %}
 <div>
+
+	<div class="row">
+		{% for each in catlist  %}
+			<div class="col-12 col-sm-6 col-md-4 col-xl-3" style="">
+				<!-- Blog post-->
+				<div class="card mb-4 my-5 " ><a href="/news/{{ each.id }}"><img class="card-img-top" height="200px"
+							src="{{ each.article_img }}" alt="{{ each.heading }}" /></a>
+					<div class="card-body">
+						<div class="small text-muted">{{ each.date }}</div>
+						<h2 class="card-title h4">{{ each.heading }}</h2>
+						<p class="card-text">{{ each.content |safe | truncatewords:25 }}</p><a class="btn btn-danger" href="/news/{{ each.id }}">Read more
+							→</a>
+					</div>
+				</div>
+				
+			</div>
+			{% empty %}
+			<div class="alert alert-danger">No content</div>
+			{% endfor %}
+		</div>
+	{% comment %} {% for each in catlist %}
 	<div>
 		<div>
 			<h2 style="font-size: 25px;">
@@ -24,7 +44,7 @@
 			</p>
 		</div>
 	</div>
-	{% endfor %}
+	{% endfor %} {% endcomment %}
 	<div class="nav">
 		<span class="">
 			{% if catlist.has_previous %}
