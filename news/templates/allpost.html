@@ -9,7 +9,26 @@ WHOTnews allpost
 {% block content %}
 <!-- top storys div -->
 <div class="pt-5">
-	{% for each in allnews %}
+	<div class="row ">
+		{% for each in allnews  %}
+			<div class="col-12 col-sm-6 col-md-4 col-xl-3" style="">
+				<!-- Blog post-->
+				<div class="card mb-4 my-5 " ><a href="/news/{{ each.id }}"><img class="card-img-top" height="200px"
+							src="{{ each.article_img }}" alt="{{ each.heading }}" /></a>
+					<div class="card-body">
+						<div class="small text-muted">{{ each.date }}</div>
+						<h2 class="card-title h4">{{ each.heading }}</h2>
+						<p class="card-text">{{ each.content |safe | truncatewords:25 }}</p><a class="btn btn-danger" href="/news/{{ each.id }}">Read more
+							→</a>
+					</div>
+				</div>
+				
+			</div>
+			{% empty %}
+			<div class="alert alert-danger">No content</div>
+			{% endfor %}
+		</div>
+	{% comment %} {% for each in allnews %}
 	<div>
 		<h5>
 			<a href="/news/{{ each.id }}" style="color: forestgreen;">{{each.heading}}</a>
@@ -19,7 +38,7 @@ WHOTnews allpost
 			{{ each.content |truncatewords:45 | safe }}
 		</p>
 	</div>
-	{% endfor %}
+	{% endfor %} {% endcomment %}
 
 	<div class="nav">
 		<span class="">

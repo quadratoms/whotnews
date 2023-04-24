@@ -19,8 +19,9 @@ class cartegory(models.Model):
 class Newsmodel(models.Model):
     newscat=models.ManyToManyField(cartegory)
     source=models.CharField(blank=True, null=True, max_length=20)
+    author=models.CharField(blank=True, null=True, max_length=20)
     source_url= models.CharField(blank=True, null=True, max_length=1000)
-    heading = models.CharField(max_length=300)
+    heading = models.CharField(max_length=300, unique=True)
     date=models.DateTimeField(auto_now_add=True)
     article_img=models.CharField(max_length=200, blank=True)
     content=RichTextField(blank=True, null=True)

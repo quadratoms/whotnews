@@ -8,14 +8,26 @@
 {% block content %}
 <!-- top storys div -->
 <div>
-	<div class="px-3">
-		<div class="row">
-			<div class="col-10">
-				<h1 style="font-size: 28px; font-weight:600; color:darkred">{{ newscontent.heading }}</h1>
-			</div>
-			<div class="col-2">
-				<button type="button" onclick="newsplay()" class="btn btn-success btn-lg" data-toggle="modal"
-					data-target="#myModal">
+	<div class="container">
+		<div class="col-lg-12">
+			<!-- Post content-->
+			<article>
+				<!-- Post header-->
+				<header class="mb-4">
+					<!-- Post title-->
+					<h1 class="fw-bolder mb-1">{{ newscontent.heading }}</h1>
+					<!-- Post meta content-->
+					<div class="text-muted fst-italic mb-2">Posted {{ newscontent.date }} from {{ newscontent.source_url | truncatechars:25 }}</div>
+					<!-- Post categories-->
+					{% for cat in newscontent.newscat.all %}
+					
+					<a class="badge bg-secondary text-decoration-none link-light" href="#!">{{cat.name}}</a>
+					{% endfor %}
+				</header>
+				<!-- Preview image figure-->
+				<figure class="mb-4"><img class="img-fluid rounded" src="{{ newscontent.article_img }}" alt="..." /></figure>
+				<button type="button" onclick="newsplay()" class="btn btn-danger btn-lg" data-bs-toggle="modal"
+					data-bs-target="#myModal">
 					Play
 				</button>
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -23,14 +35,100 @@
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header justify-content-between">
-								<h4 class="modal-title" id="myModalLabel">NEW READER</h4>
+								<h4 class="modal-title" id="myModalLabel">NEWS READER</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
 							</div>
-							<div class="modal-body bg-success">
+							<div class="modal-body ">
 								<div>
-									<audio src="" controls>play</audio>
+									<audio src="/tts?text={{ a }}" controls>play</audio>
+								</div>
+								<div class="modal-footer justify-content-center">
+									<button type="button" class="btn btn-light " data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- -->
+				</div>
+				<!-- Post content-->
+				<section class="mb-5">
+					{{ newscontent.content | safe }}
+				</section>
+			</article>
+			<!-- Comments section-->
+			<section class="mb-5">
+				<div class="card bg-light">
+					<div class="card-body">
+						<!-- Comment form-->
+						<form method="post" class="mb-4">
+							{% csrf_token %}
+							<textarea class="form-control" rows="3" name="body" placeholder="Join the discussion and leave a comment!"></textarea>			<button class="btn btn-outline-danger my-2 my-sm-0" name="comment" type="submit">Submit</button>
+						</form>
+						<!-- Comment with nested comments-->
+						{% comment %} <div class="d-flex mb-4">
+							<!-- Parent comment-->
+							<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+							<div class="ms-3">
+								<div class="fw-bold">Commenter Name</div>
+								If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
+								<!-- Child comment 1-->
+								<div class="d-flex mt-4">
+									<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+									<div class="ms-3">
+										<div class="fw-bold">Commenter Name</div>
+										And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+									</div>
+								</div>
+								<!-- Child comment 2-->
+								<div class="d-flex mt-4">
+									<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+									<div class="ms-3">
+										<div class="fw-bold">Commenter Name</div>
+										When you put money directly to a problem, it makes a good headline.
+									</div>
+								</div>
+							</div>
+						</div> {% endcomment %}
+						<!-- Single comment-->
+						
+						{% for each in newscomment %}							
+						<div class="d-flex my-2">
+							<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+							<div class="ms-3">
+								<div class="fw-bold">{{each.us}} <span class="small text-danger">{{each.time}}</span></div>
+									{{each.body}}
+							</div>
+						</div>
+						{% endfor %}
+							
+					</div>
+				</div>
+			</section>
+		</div>
+		{% comment %} <div class="row">
+			<div class="col-10">
+				<h1 style="font-size: 28px; font-weight:600; color:darkred">{{ newscontent.heading }}</h1>
+			</div>
+			<div class="col-2">
+				<button type="button" onclick="newsplay()" class="btn btn-success btn-lg" data-bs-toggle="modal"
+					data-bs-target="#myModal">
+					Play
+				</button>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+					style="display: none;">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header justify-content-between">
+								<h4 class="modal-title" id="myModalLabel">NEWS READER</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body ">
+								<div>
+									<audio src="/tts?text={{ a }}" controls>play</audio>
 								</div>
 								<div class="modal-footer justify-content-center">
 									<button type="button" class="btn btn-light " data-dismiss="modal">Close</button>
@@ -41,9 +139,9 @@
 					<!-- -->
 				</div>
 			</div>
-			<div>
+			<div class="col-12 col-sm-6">
 				{% if newscontent.article_img %}
-				<img src='{{ newscontent.article_img }}' width="50%" alt="{{ newscontent.heading }}">
+				<img src='{{ newscontent.article_img }}' width="100%" alt="{{ newscontent.heading }}">
 				{% else %}
 				<img src='{% static "logo.png" %}' width="50%" alt="whotnews icon">
 				{% endif %}
@@ -66,14 +164,14 @@
 
 			<textarea name="body" rows="4" cols="30" spellcheck="true"></textarea>
 			<button class="btn btn-outline-success my-2 my-sm-0" name="comment" type="submit">Submit</button>
-		</form>
-		{% for each in newscomment %}
+		</form> {% endcomment %}
+		{% comment %} {% for each in newscomment %}
 		<div class="border border-danger">
 			<h6 class="border alert-danger">{{ each.us }}</h6>
 			<p class="">{{ each.body }}</p>
 			<span>{{ each.time }}</span>
 		</div>
-		{% endfor %}
+		{% endfor %} {% endcomment %}
 
 
 	</div>
@@ -94,26 +192,26 @@
 		function newsplay() {
 			//var url = 'https://stackoverflow.com/questions/38004048/get-and-fetch-getting-html-body'
 
-			var url = 'http://localhost:8000/gtts/en-us/{{ a }}'
+			{% comment %} var url = 'http://localhost:8000/gtts/en-us/{{ a }}'
 			fetch(url, {
-					method: 'GET', // *GET, POST, PUT, DELETE, etc.
-					mode: 'no-cors', // no-cors, *cors, same-origin
-					cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-					credentials: 'same-origin', // include, *same-origin, omit
-					headers: {
-						//'Content-Type': 'application/json',
-						'Content-Type': 'text/json',
-						'Access-Control-Allow-Origin': '*'
-						// 'Content-Type': 'application/x-www-form-urlencoded',
-					}
-				})
+				method: 'GET', // *GET, POST, PUT, DELETE, etc.
+				mode: 'no-cors', // no-cors, *cors, same-origin
+				cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+				credentials: 'same-origin', // include, *same-origin, omit
+				headers: {
+					//'Content-Type': 'application/json',
+					'Content-Type': 'text/json',
+					'Access-Control-Allow-Origin': '*'
+					// 'Content-Type': 'application/x-www-form-urlencoded',
+				}
+			})
 				.then(response => {
 					return response.json();
 				}).then(data => {
 					console.log('data:', data);
 					let b = document.querySelector('audio');
 					b.setAttribute('src', 'http://localhost:8000' + data.mp3)
-				});
+				}); {% endcomment %}
 		}
 		//newsplay()
 
@@ -143,8 +241,8 @@
 
 			$('#btnPreventModal').on('click', function () {
 				$('#firefoxModal').one('shown.bs.modal', function () {
-						$(this).modal('hide')
-					})
+					$(this).modal('hide')
+				})
 					.one('hide.bs.modal', function (event) {
 						event.preventDefault()
 						if ($(this).data('bs.modal')._isTransitioning) {

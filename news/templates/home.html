@@ -8,11 +8,11 @@ WHOTnews
 
 {% block content %}
 <!-- top storys div -->
-<div class='alert-danger p-2'>
+<div class='bg-light p-2'>
 
 	<h1 class='text-danger'>Top Storys</h1>
 
-	{% for each in top %}
+	{% comment %} {% for each in top %}
 	<div style="border: 0.7rem solid white ;">
 		<div class="row ">
 			<div class="col-sm-9">
@@ -43,7 +43,27 @@ WHOTnews
 		</div>
 	</div>
 	<br>
-	{% endfor %}
+	{% endfor %} {% endcomment %}
+	<div class="container">
+		<div class="row">
+			<!-- Blog entries-->
+			<div class="col-lg-12">
+				<!-- Featured blog post-->
+				<div class="card mb-4"><a href="/news/{{ top.0.id }}"><img class="card-img-top"
+							src="{{ top.0.article_img }}" alt="..." /></a>
+					<div class="card-body">
+						<div class="small text-muted">{{top.0.date}}</div>
+						<h2 class="card-title">Featured: {{top.0.heading}}</h2>
+						<p class="card-text">{{top.0.content |truncatewords:25 | safe}}</p><a class="btn btn-danger"
+							href="/news/{{ top.0.id }}">Read more →</a>
+					</div>
+				</div>
+				
+				
+			</div>
+			
+		</div>
+	</div>
 
 	<hr>
 
@@ -54,9 +74,30 @@ WHOTnews
 	<img src="/static/lacard.png" width="100%" >
 </div>
 <!-- list of recent update -->
-<div>
+<div class="container">
 	<h2>Recent Update News</h2>
-	{% for each in allnews %}
+	
+	<div class="row row-cols-2">
+	{% for each in allnews  %}
+		<div class="col" style="">
+			<!-- Blog post-->
+			<div class="card mb-4 my-5 " ><a href="/news/{{ each.id }}"><img class="card-img-top" height="200px"
+						src="{{ each.article_img }}" alt="{{ each.heading }}" /></a>
+				<div class="card-body">
+					<div class="small text-muted">{{ each.date }}</div>
+					<h2 class="card-title h4">{{ each.heading }}</h2>
+					<p class="card-text">{{ each.content |safe | truncatewords:25 }}</p><a class="btn btn-danger" href="/news/{{ each.id }}">Read more
+						→</a>
+				</div>
+			</div>
+			
+		</div>
+		{% empty %}
+		<div class="alert alert-danger">No content</div>
+		{% endfor %}
+	</div>
+		
+	{% comment %} {% for each in allnews %}
 
 	<div class='row'>
 		<div class='col-md-9'>
@@ -78,7 +119,7 @@ WHOTnews
 		</div>
 		<hr>
 	</div>
-	{% endfor %}
+	{% endfor %} {% endcomment %}
 
 	<a href="/allpost" class='justify-content-center row'>
 		<button type="button" class="btn btn-success font-weight-bold">more</button>

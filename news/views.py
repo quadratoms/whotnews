@@ -5,6 +5,27 @@ from .viewengine import searchengine, topstory, catmake, addhtml, catlistlist, c
 from .models import Newsmodel, Comment, cartegory
 from django.contrib import messages
 
+import pyttsx3
+from django.http import HttpResponse
+from tempfile import TemporaryFile
+from gtts.tts import gTTS
+
+def tts(request):
+    text = request.GET.get('text')
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    engine.setProperty('rate', 150) # Set the speaking rate
+    engine.setProperty('voice', voices[1].id) # Set the voice
+    engine.save_to_file(text, 'audio.mp3') # Generate the TTS audio file
+    engine.runAndWait()
+    with open('audio.mp3', 'rb') as f:
+        response = HttpResponse(f.read(), content_type='audio/mpeg')
+        response['Content-Disposition'] = 'attachment; filename=tts_audio.mp3'
+        return response
+    # tts = gTTS(text=text, lang='en-us', slow=False) # Generate TTS audio file
+    # response = HttpResponse(tts.stream(), content_type='audio/mpeg')
+    # response['Content-Disposition'] = 'attachment; filename=tts_audio.mp3'
+    # return response
 
 
 def home(request):
@@ -71,6 +92,7 @@ def news(request, id):
             comment= Comment(comment=newscontent,us=request.user, body=body)
             
             comment.save()
+        return redirect(request.path)
 
     return render(request, 'news.html', {'a':a, 'c':c,'catlink':catlink, 'newscontent':newscontent, 'newscomment':newscomment})
 

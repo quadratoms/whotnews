@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rest_framework',
     'newapi',
-    'gtts',
     'news',
     'ckeditor',
     'newblog',
@@ -44,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,3 +125,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CKEDITOR_UPLOAD_PATH=Path.joinpath( BASE_DIR,"ckupload")
+DEFAULT_AUTO_FIELD="django.db.models.BigAutoField"
